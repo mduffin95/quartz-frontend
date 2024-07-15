@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ReactNode } from "react";
-import { UserProvider } from "@auth0/nextjs-auth0/client";
 import LayoutWrapper from "@/src/components/layout/LayoutWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -19,11 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <UserProvider>
-        <body className={inter.className}>
-          <LayoutWrapper>{children}</LayoutWrapper>
-        </body>
-      </UserProvider>
+      <body className={inter.className}>
+        <LayoutWrapper>{children}</LayoutWrapper>
+      </body>
     </html>
   );
 }

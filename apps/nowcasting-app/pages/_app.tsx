@@ -1,5 +1,4 @@
 import type { AppProps } from "next/app";
-import { UserProvider } from "@auth0/nextjs-auth0";
 import { ToastContainer, toast } from "react-toastify";
 import "../styles/globals.css";
 import { SWRConfig } from "swr";
@@ -9,7 +8,6 @@ import { AxiosError } from "axios";
 
 function MyApp({ Component, pageProps }: any) {
   return (
-    <UserProvider>
       <SWRConfig
         value={{
           provider: () => new Map(),
@@ -37,7 +35,6 @@ function MyApp({ Component, pageProps }: any) {
 
         <Component {...pageProps} />
       </SWRConfig>
-    </UserProvider>
   );
 }
 

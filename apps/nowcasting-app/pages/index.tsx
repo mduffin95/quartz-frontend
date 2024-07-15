@@ -1,4 +1,3 @@
-import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0";
 import Layout from "../components/layout/layout";
 import { PvLatestMap } from "../components/map";
 import SideLayout from "../components/side-layout";
@@ -61,7 +60,7 @@ export default function Home({ dashboardModeServer }: { dashboardModeServer: str
   const [selectedISOTime] = useGlobalState("selectedISOTime");
   const selectedTime = formatISODateString(selectedISOTime || new Date().toISOString());
   const [timeNow] = useGlobalState("timeNow");
-  const { user, isLoading, error } = useUser();
+  // const { user, isLoading, error } = useUser();
   const [maps] = useGlobalState("maps");
   const [lat] = useGlobalState("lat");
   const [lng] = useGlobalState("lng");
@@ -107,18 +106,18 @@ export default function Home({ dashboardModeServer }: { dashboardModeServer: str
 
   const currentView = (v: VIEWS) => v === view;
 
-  useEffect(() => {
-    if (user && !isLoading && !error) {
-      Sentry.setUser({
-        id: user.sub || "",
-        email: user.email || "",
-        username: user.nickname || "",
-        name: user.name,
-        locale: user.locale,
-        avatar: user.picture
-      });
-    }
-  }, [user, isLoading, error]);
+  // useEffect(() => {
+  //   if (user && !isLoading && !error) {
+  //     Sentry.setUser({
+  //       id: user.sub || "",
+  //       email: user.email || "",
+  //       username: user.nickname || "",
+  //       name: user.name,
+  //       locale: user.locale,
+  //       avatar: user.picture
+  //     });
+  //   }
+  // }, [user, isLoading, error]);
 
   useEffect(() => {
     maps.forEach((map) => {
@@ -714,13 +713,13 @@ export default function Home({ dashboardModeServer }: { dashboardModeServer: str
   );
 }
 
-export const getServerSideProps = withPageAuthRequired({
-  async getServerSideProps(context) {
-    const cookies = new Cookies(context.req, context.res);
-    return {
-      props: {
-        dashboardModeServer: cookies.get(CookieStorageKeys.DASHBOARD_MODE) || false
-      }
-    };
-  }
-});
+// export const getServerSideProps = withPageAuthRequired({
+//   async getServerSideProps(context) {
+//     const cookies = new Cookies(context.req, context.res);
+//     return {
+//       props: {
+//         dashboardModeServer: cookies.get(CookieStorageKeys.DASHBOARD_MODE) || false
+//       }
+//     };
+//   }
+// });

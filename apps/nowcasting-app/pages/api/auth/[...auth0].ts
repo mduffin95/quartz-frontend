@@ -16,6 +16,7 @@ function getUrls(req: NextApiRequest) {
 export default withSentry(
   handleAuth({
     async callback(req: NextApiRequest, res: NextApiResponse) {
+      console.log("callback")
       try {
         const { redirectUri } = getUrls(req);
         await handleCallback(req, res, { redirectUri: redirectUri });
@@ -26,17 +27,19 @@ export default withSentry(
 
     async login(req: NextApiRequest, res: NextApiResponse) {
       try {
+        console.log("login")
         const { redirectUri, returnTo } = getUrls(req);
 
-        await handleLogin(req, res, {
-          authorizationParams: {
-            redirect_uri: redirectUri,
-            audience: process.env.NEXT_PUBLIC_AUTH0_API_AUDIENCE || "https://api.quartz.solar/", // Production fallback
-            scope: "openid profile email offline_access",
-            useRefreshTokens: true
-          },
-          returnTo: returnTo
-        });
+        // await handleLogin(req, res, {
+        //   authorizationParams: {
+        //     redirect_uri: redirectUri,
+        //     audience: process.env.NEXT_PUBLIC_AUTH0_API_AUDIENCE || "https://api.quartz.solar/", // Production fallback
+        //     scope: "openid profile email offline_access",
+        //     useRefreshTokens: true
+        //   },
+        //   returnTo: returnTo
+        // });
+        return;
       } catch (error: any) {
         res.status(error.status || 400).end(error.message);
       }
