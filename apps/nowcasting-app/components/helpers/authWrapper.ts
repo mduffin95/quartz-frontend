@@ -13,7 +13,7 @@ function isDev() {
 
 export function withApiAuthRequired(apiRoute: NextApiHandler): NextApiHandler {
   if (isDev()) {
-    // don't require a session token when
+    // don't require a session cookie when running locally
     return apiRoute;
   }
   return withApiAuthRequiredAuth0(apiRoute);
@@ -25,7 +25,7 @@ export async function getAccessToken(
 ): Promise<GetAccessTokenResult> {
   if (isDev()) {
     // for local development make sure this env variable is set
-    return { accessToken: process.env.AUTH0_SECRET } as GetAccessTokenResult;
+    return { accessToken: process.env.BEARER_TOKEN } as GetAccessTokenResult;
   }
   return getAccessTokenAuth0(req, res);
 }
