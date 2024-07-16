@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
+import { useUser } from "../../helpers/authWrapper";
 import pkg from "../../../package.json";
 import { classNames, formatISODateStringHumanNumbersOnly, isProduction } from "../../helpers/utils";
 import Link from "next/link";
@@ -13,6 +14,7 @@ const { version } = pkg;
 interface IProfileDropDown {}
 
 const ProfileDropDown = ({}: IProfileDropDown) => {
+  const { user } = useUser();
   const [show4hView, setShow4hView] = useGlobalState("show4hView");
   const [dashboardMode, setDashboardMode] = useGlobalState("dashboardMode");
   const toggleDashboardMode = () => {
@@ -30,7 +32,7 @@ const ProfileDropDown = ({}: IProfileDropDown) => {
       <div>
         <Menu.Button className="flex text-sm bg-white rounded-full overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-danube-500">
           <span className="sr-only">Open user menu</span>
-          <img className="w-8 h-8" src={""} alt="" />
+          <img className="w-8 h-8" src={(user && user.picture) || ""} alt="" />
         </Menu.Button>
       </div>
       <Transition
@@ -157,7 +159,7 @@ const ProfileDropDown = ({}: IProfileDropDown) => {
           </div>
           <div id={"UserMenu-SignedInText"} className="px-4 py-3 border-b border-gray-300">
             <p className="text-xs text-ocf-black-300">Signed in as</p>
-            <p className="text-xs font-medium text-ocf-black-300 truncate">{""}</p>
+            <p className="text-xs font-medium text-ocf-black-300 truncate">{user && user.email}</p>
           </div>
 
           <Menu.Item>
