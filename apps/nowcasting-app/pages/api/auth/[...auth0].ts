@@ -30,15 +30,15 @@ export default withSentry(
         console.log("login")
         const { redirectUri, returnTo } = getUrls(req);
 
-        // await handleLogin(req, res, {
-        //   authorizationParams: {
-        //     redirect_uri: redirectUri,
-        //     audience: process.env.NEXT_PUBLIC_AUTH0_API_AUDIENCE || "https://api.quartz.solar/", // Production fallback
-        //     scope: "openid profile email offline_access",
-        //     useRefreshTokens: true
-        //   },
-        //   returnTo: returnTo
-        // });
+        await handleLogin(req, res, {
+          authorizationParams: {
+            redirect_uri: redirectUri,
+            audience: process.env.NEXT_PUBLIC_AUTH0_API_AUDIENCE || "https://api.quartz.solar/", // Production fallback
+            scope: "openid profile email offline_access",
+            useRefreshTokens: true
+          },
+          returnTo: returnTo
+        });
         return;
       } catch (error: any) {
         res.status(error.status || 400).end(error.message);
