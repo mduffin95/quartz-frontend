@@ -1,4 +1,4 @@
-import { getAccessToken, withApiAuthRequired } from "@auth0/nextjs-auth0";
+import { getAccessToken, withApiAuthRequired } from "../../components/helpers/authWrapper";
 
 export default withApiAuthRequired(async function token(req, res) {
   try {
